@@ -1,6 +1,7 @@
 import React from 'react';
 import { generateSmartSession } from '../utils/profileManager';
 import { Play, Zap, Flame, Trophy, Sliders, ChevronRight, Hash, BookOpen, Target, Sparkles } from 'lucide-react';
+import { Mascot } from './Mascot';
 import { playSound } from '../utils/sound';
 import { triggerHaptic } from '../utils/haptics';
 
@@ -26,28 +27,18 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
   return (
     <div className="max-w-md mx-auto p-4 pb-28 select-none space-y-5 animate-in fade-in duration-200">
       
-      {/* 1. Athletic Training Status Header (Clean, sleek, mature) */}
+      {/* 1. Athletic Training Status Header with 3D Coach */}
       <div className="card-light p-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-300 text-amber-600 flex items-center justify-center font-black text-lg shadow-sm">
-            <Flame className="w-6 h-6 fill-amber-500 text-amber-500" />
-          </div>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm font-black text-slate-900 tracking-tight">Racha de {profile.streak || 1} días</span>
-              <span className="text-[10px] font-black uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
-                Activa
-              </span>
-            </div>
-            <p className="text-xs text-slate-500 mt-0.5 font-medium">
-              {numbersConquered === 0
-                ? "Fase 1: Conquista de dígitos base (0 al 9)"
-                : `${numbersConquered} de 100 números conquistados`}
-            </p>
-          </div>
-        </div>
-
-        <div className="text-right">
+        <Mascot
+          mood="happy"
+          size={58}
+          speech={
+            numbersConquered === 0
+              ? "¡Empezamos desde cero! Dominemos primero los dígitos base 0 al 9."
+              : `¡Racha de ${profile.streak || 1} días! Tu mente está lista para memorizar hoy.`
+          }
+        />
+        <div className="text-right shrink-0 ml-2">
           <span className="text-xs font-black text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-xl">
             {profile.xp || 0} XP
           </span>

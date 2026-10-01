@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Play, ArrowLeft, RotateCcw, CheckCircle2, XCircle, Trophy, Zap, Sliders, Hash, BookOpen, Shuffle, Award, Check } from 'lucide-react';
+import { Mascot } from './Mascot';
 import { VOCABULARY } from '../data/lessons';
 import { CASILLERO_100 } from '../data/casillero';
 import { playSound } from '../utils/sound';
@@ -232,6 +233,8 @@ export const CustomTrainer = ({ onBack, onComplete, soundEnabled }) => {
             </p>
           </div>
 
+          <Mascot mood="focus" size={60} speech="Configura tu reto a voluntad. ¡Acepta el desafío!" className="mb-2" />
+
           {/* 1. Tipo: Números, Palabras, Híbrido */}
           <div className="card-light p-4 space-y-2">
             <label className="text-xs font-black uppercase tracking-wider text-slate-500 block">
@@ -401,13 +404,10 @@ export const CustomTrainer = ({ onBack, onComplete, soundEnabled }) => {
           <div className="my-auto py-8">
             <div className="card-light border-2 border-indigo-400 rounded-3xl p-8 shadow-xl max-w-sm mx-auto animate-pop">
               {sequence[currentIndex]?.type === 'number' ? (
-                <div className="space-y-3">
-                  <div className="inline-block bg-slate-900 text-emerald-400 font-mono font-black text-6xl px-8 py-4 rounded-3xl shadow-inner border-2 border-slate-700">
+                <div className="py-2">
+                  <div className="inline-block bg-slate-900 text-emerald-400 font-mono font-black text-6xl md:text-7xl px-8 py-5 rounded-3xl shadow-inner border-2 border-slate-700">
                     {sequence[currentIndex].text}
                   </div>
-                  {sequence[currentIndex]?.emoji && (
-                    <div className="text-2xl pt-1 opacity-75">{sequence[currentIndex].emoji}</div>
-                  )}
                 </div>
               ) : (
                 <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-wide">
@@ -483,9 +483,12 @@ export const CustomTrainer = ({ onBack, onComplete, soundEnabled }) => {
       {phase === 'evaluated' && evalResults && (
         <div className="flex-1 flex flex-col justify-between my-2 animate-in fade-in duration-200">
           <div className="text-center mb-3">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-3xl bg-amber-100 text-amber-600 border border-amber-200 shadow-sm mx-auto mb-1">
-              <Trophy className="w-7 h-7 fill-amber-500" />
-            </div>
+            <Mascot
+              mood="celebrating"
+              size={75}
+              speech={evalResults.accuracy >= 90 ? "¡Excelente! Has dominado la lista completa." : "¡Buen esfuerzo! Repasa los huecos marcados en rojo."}
+              className="justify-center mx-auto mb-2"
+            />
             <h2 className="text-xl font-black text-slate-900">Resultados del Gimnasio</h2>
             <p className="text-xs text-slate-500 mt-0.5">
               Has acertado <strong className="text-emerald-600 font-black">{evalResults.score}</strong> de {evalResults.total} ({evalResults.accuracy}%)

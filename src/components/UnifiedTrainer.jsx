@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti';
 import { ArrowLeft, Play, CheckCircle2, XCircle, Trophy, Zap, Star, Sparkles, TrendingUp, TrendingDown, ArrowRight, Keyboard, List, Eye, Flame, Award } from 'lucide-react';
 import { VOCABULARY } from '../data/lessons';
 import { CASILLERO_100 } from '../data/casillero';
+import { Mascot } from './Mascot';
 import { playSound } from '../utils/sound';
 import { triggerHaptic } from '../utils/haptics';
 import { generateSmartSession, generateNextInStreakSession } from '../utils/profileManager';
@@ -349,14 +350,17 @@ export const UnifiedTrainer = ({ config, profile, onBack, onComplete, onStartSes
 
       {/* 1. READY PHASE */}
       {phase === 'ready' && (
-        <div className="my-auto space-y-5 text-center animate-in zoom-in-95 duration-200">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-600 border border-emerald-200 shadow-sm mx-auto text-2xl font-black">
-            {config.icon || (config.type === 'numbers' ? '🔢' : '🧠')}
-          </div>
+        <div className="my-auto space-y-4 text-center animate-in zoom-in-95 duration-200">
+          <Mascot
+            mood="focus"
+            size={75}
+            speech="¡Asocia cada elemento con una acción estrafalaria y viva!"
+            className="justify-center mx-auto"
+          />
 
           <div>
             <h2 className="text-2xl font-black text-slate-900">{config.title}</h2>
-            <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">{config.subtitle}</p>
+            <p className="text-xs text-slate-500 mt-0.5 max-w-xs mx-auto">{config.subtitle}</p>
           </div>
 
           <div className="card-light p-5 text-xs text-slate-700 text-left max-w-xs mx-auto space-y-3">
@@ -403,17 +407,14 @@ export const UnifiedTrainer = ({ config, profile, onBack, onComplete, onStartSes
             </span>
           </div>
 
-          {/* Flash Card: Sleek, high-contrast, without tips */}
+          {/* Flash Card: Sleek, high-contrast, without tips or emoji crutches */}
           <div className="my-auto py-8">
             <div className="card-light border-2 border-emerald-500 p-8 shadow-md max-w-sm mx-auto animate-pop">
               {items[currentIndex]?.type === 'number' ? (
-                <div className="space-y-3">
-                  <div className="inline-block bg-slate-900 text-emerald-400 font-mono font-black text-6xl px-8 py-4 rounded-3xl shadow-inner border-2 border-slate-700">
+                <div className="py-2">
+                  <div className="inline-block bg-slate-900 text-emerald-400 font-mono font-black text-6xl md:text-7xl px-8 py-5 rounded-3xl shadow-inner border-2 border-slate-700">
                     {items[currentIndex].text}
                   </div>
-                  {items[currentIndex]?.emoji && (
-                    <div className="text-2xl pt-1 opacity-75">{items[currentIndex].emoji}</div>
-                  )}
                 </div>
               ) : (
                 <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-wide">
@@ -635,9 +636,12 @@ export const UnifiedTrainer = ({ config, profile, onBack, onComplete, onStartSes
       {/* 4. RESULTS PHASE */}
       {phase === 'results' && (
         <div className="my-auto space-y-4 text-center animate-in zoom-in-95 duration-200">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-amber-100 text-amber-600 border border-amber-200 shadow-sm mx-auto">
-            <Trophy className="w-8 h-8 fill-amber-500" />
-          </div>
+          <Mascot
+            mood="celebrating"
+            size={80}
+            speech={score >= items.length * 0.9 ? "¡Excelente evocación! La cadena se mantiene firme." : "¡Buen entrenamiento! Cada sesión refuerza tus conexiones."}
+            className="justify-center mx-auto"
+          />
 
           <div>
             <h2 className="text-2xl font-black text-slate-900">¡Sesión Evaluada!</h2>
