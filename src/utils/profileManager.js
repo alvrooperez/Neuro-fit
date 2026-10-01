@@ -345,7 +345,7 @@ export const evaluateSessionResult = (currentProfile, sessionData) => {
     newRecords.push(`¡Nuevo Récord de Velocidad: ${cadence}s por ítem!`);
   }
 
-  // --- MASTERY & PROGRESSION LOGIC (Needs 3 checks >= 90%) ---
+  // --- STRICT ATHLETIC MASTERY ENGINE (Needs 3 checks >= 90%, loses 1 check if < 90%) ---
   if (style === 'normal') {
     const targetModel = profile[model] || profile.words;
     if (isMasteryHit) {
@@ -361,19 +361,20 @@ export const evaluateSessionResult = (currentProfile, sessionData) => {
         }
         targetModel.normal.masteryChecks = 0; // Reset checks for the new level
         masteryChecks = 3;
-        feedbackMessage = `¡MAESTRÍA CONSOLIDADA (3/3 aciertos ≥ 90%)! Asciendes al Nivel ${targetModel.level} en ${model}. En la próxima aumentamos a ${targetModel.normal.itemsCount} elementos a ${targetModel.normal.cadence}s.`;
+        feedbackMessage = `¡MAESTRÍA CONSOLIDADA (3/3 aciertos ≥ 90%)! Asciendes al Nivel ${targetModel.level} en ${model}. Próximo objetivo: ${targetModel.normal.itemsCount} elementos a ${targetModel.normal.cadence}s.`;
       } else {
-        feedbackMessage = `¡Excelente sesión (${Math.round(accuracy * 100)}%)! Sumas ${targetModel.normal.masteryChecks} de 3 checks para consolidar el Nivel ${targetModel.level}.`;
+        feedbackMessage = `¡Excelente evocación (${Math.round(accuracy * 100)}% ≥ 90%)! Sumas check: ${targetModel.normal.masteryChecks}/3 hacia el Nivel ${targetModel.level + 1}.`;
       }
-    } else if (isSevereFail) {
-      if (targetModel.normal.masteryChecks > 0) {
-        targetModel.normal.masteryChecks -= 1;
-      }
-      masteryChecks = targetModel.normal.masteryChecks;
-      feedbackMessage = `Sesión difícil (${Math.round(accuracy * 100)}%). El sistema mantiene el nivel para consolidar bien la técnica sin subir en falso.`;
     } else {
-      masteryChecks = targetModel.normal.masteryChecks || 0;
-      feedbackMessage = `Buen entrenamiento de práctica (${Math.round(accuracy * 100)}%). Mantienes tu ritmo estable.`;
+      // STRICT: Any failure below 90% loses 1 check!
+      const prevChecks = targetModel.normal.masteryChecks || 0;
+      targetModel.normal.masteryChecks = Math.max(0, prevChecks - 1);
+      masteryChecks = targetModel.normal.masteryChecks;
+      if (prevChecks > 0) {
+        feedbackMessage = `Acierto del ${Math.round(accuracy * 100)}% (< 90%). Modo estricto: pierdes 1 check. Te quedan ${masteryChecks}/3 checks.`;
+      } else {
+        feedbackMessage = `Acierto del ${Math.round(accuracy * 100)}%. Se exige un mínimo de 90% para sumar checks (0/3 checks).`;
+      }
     }
   } else if (style === 'consolidacion' && model === 'numbers') {
     // Casillero Block Consolidation
@@ -388,13 +389,20 @@ export const evaluateSessionResult = (currentProfile, sessionData) => {
         profile.numbers.conqueredCount = nextRange + 1;
         profile.numbers.masteryChecks = 0;
         masteryChecks = 3;
-        feedbackMessage = `¡BLOQUE CONQUISTADO (3/3 checks)! Has asimilado los números hasta el ${nextRange}. El motor empezará a incluir el siguiente bloque en tus entrenamientos.`;
+        feedbackMessage = `¡BLOQUE CONQUISTADO (3/3 checks ≥ 90%)! Has asimilado los números hasta el ${nextRange}. Se desbloquea el siguiente bloque en tus entrenamientos.`;
       } else {
-        feedbackMessage = `¡Casillero firme (${Math.round(accuracy * 100)}%)! ${profile.numbers.masteryChecks}/3 checks hacia la conquista de este bloque.`;
+        feedbackMessage = `¡Casillero firme (${Math.round(accuracy * 100)}% ≥ 90%)! Sumas check: ${profile.numbers.masteryChecks}/3 hacia la conquista de este bloque.`;
       }
     } else {
-      masteryChecks = profile.numbers.masteryChecks || 0;
-      feedbackMessage = `Sigue afianzando estas imágenes (${Math.round(accuracy * 100)}%). El objetivo es responder en menos de un segundo.`;
+      // STRICT: Below 90% in Casillero loses 1 check!
+      const prevChecks = profile.numbers.masteryChecks || 0;
+      profile.numbers.masteryChecks = Math.max(0, prevChecks - 1);
+      masteryChecks = profile.numbers.masteryChecks;
+      if (prevChecks > 0) {
+        feedbackMessage = `Acierto del ${Math.round(accuracy * 100)}% (< 90%). Pierdes 1 check de casillero. Te quedan ${masteryChecks}/3 checks.`;
+      } else {
+        feedbackMessage = `Acierto del ${Math.round(accuracy * 100)}%. Necesitas un mínimo del 90% para sumar checks en el casillero (0/3 checks).`;
+      }
     }
   } else if (style === 'corta') {
     // Sprint
