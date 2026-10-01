@@ -2,6 +2,7 @@ import React from 'react';
 import { generateSmartSession } from '../utils/profileManager';
 import { Play, Zap, Flame, Trophy, Sliders, ChevronRight, Hash, BookOpen, Target, Sparkles } from 'lucide-react';
 import { Mascot } from './Mascot';
+import { DuoWordsIcon, DuoNumbersIcon, DuoHybridIcon } from './DuoIcons';
 import { playSound } from '../utils/sound';
 import { triggerHaptic } from '../utils/haptics';
 
@@ -60,18 +61,14 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         </div>
 
         <div className="flex items-center space-x-3 my-3">
-          <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white/40 shadow-md shrink-0 bg-white/10 backdrop-blur-xs">
-            <img
-              src={
-                recommended.model === 'numbers'
-                  ? '/badges/badge_numbers.jpg'
-                  : recommended.model === 'hybrid'
-                  ? '/badges/badge_hybrid.jpg'
-                  : '/badges/badge_words.jpg'
-              }
-              alt="Insignia Sesión"
-              className="w-full h-full object-cover"
-            />
+          <div className="w-14 h-14 shrink-0 drop-shadow-md">
+            {recommended.model === 'numbers' ? (
+              <DuoNumbersIcon className="w-full h-full" />
+            ) : recommended.model === 'hybrid' ? (
+              <DuoHybridIcon className="w-full h-full" />
+            ) : (
+              <DuoWordsIcon className="w-full h-full" />
+            )}
           </div>
           <div>
             <h2 className="text-xl font-black tracking-tight">{recommended.title}</h2>
@@ -129,8 +126,8 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         {/* PILAR 1: PALABRAS */}
         <div className="card-light p-4 flex items-center justify-between hover:border-slate-300 transition-colors">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-amber-300 shadow-sm shrink-0">
-              <img src="/badges/badge_words.jpg" alt="Pilar Palabras" className="w-full h-full object-cover" />
+            <div className="w-12 h-12 shrink-0 drop-shadow-sm">
+              <DuoWordsIcon className="w-full h-full" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
@@ -165,8 +162,8 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         <div className="card-light p-4 space-y-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-2xl overflow-hidden border border-amber-300 shadow-sm shrink-0">
-                <img src="/badges/badge_numbers.jpg" alt="Pilar Números" className="w-full h-full object-cover" />
+              <div className="w-12 h-12 shrink-0 drop-shadow-sm">
+                <DuoNumbersIcon className="w-full h-full" />
               </div>
               <div>
                 <h4 className="font-black text-sm text-slate-800">Pilar Números & Casillero</h4>
@@ -204,8 +201,8 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         {/* PILAR 3: EL RETO HÍBRIDO */}
         <div className="card-light p-4 flex items-center justify-between hover:border-slate-300 transition-colors">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-cyan-300 shadow-sm shrink-0">
-              <img src="/badges/badge_hybrid.jpg" alt="El Duelo Híbrido" className="w-full h-full object-cover" />
+            <div className="w-12 h-12 shrink-0 drop-shadow-sm">
+              <DuoHybridIcon className="w-full h-full" />
             </div>
             <div>
               <div className="flex items-center space-x-2">

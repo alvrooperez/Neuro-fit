@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { Play, ArrowLeft, RotateCcw, CheckCircle2, XCircle, Trophy, Zap, Sliders, Hash, BookOpen, Shuffle, Award, Check } from 'lucide-react';
 import { Mascot } from './Mascot';
+import { DuoWordsIcon, DuoNumbersIcon, DuoHybridIcon } from './DuoIcons';
 import { VOCABULARY } from '../data/lessons';
 import { CASILLERO_100 } from '../data/casillero';
 import { playSound } from '../utils/sound';
@@ -242,21 +243,21 @@ export const CustomTrainer = ({ onBack, onComplete, soundEnabled }) => {
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: 'palabras', label: 'Palabras', icon: '🧠' },
-                { id: 'numeros', label: 'Números', icon: '🔢' },
-                { id: 'hibrido', label: 'Híbrido', icon: '🌪️' }
+                { id: 'palabras', label: 'Palabras', iconComponent: <DuoWordsIcon className="w-8 h-8 mx-auto mb-1 drop-shadow-xs" /> },
+                { id: 'numeros', label: 'Números', iconComponent: <DuoNumbersIcon className="w-8 h-8 mx-auto mb-1 drop-shadow-xs" /> },
+                { id: 'hibrido', label: 'Híbrido', iconComponent: <DuoHybridIcon className="w-8 h-8 mx-auto mb-1 drop-shadow-xs" /> }
               ].map(m => (
                 <button
                   key={m.id}
                   onClick={() => setModelType(m.id)}
-                  className={`py-3 px-2 rounded-2xl border text-center transition-all ${
+                  className={`py-2.5 px-2 rounded-2xl border text-center transition-all ${
                     modelType === m.id
                       ? 'bg-indigo-600 text-white border-indigo-700 shadow-md font-black ring-2 ring-indigo-200'
                       : 'bg-slate-50 text-slate-700 border-slate-200 font-bold hover:bg-slate-100'
                   }`}
                 >
-                  <span className="text-xl block mb-0.5">{m.icon}</span>
-                  <span className="text-xs">{m.label}</span>
+                  {m.iconComponent}
+                  <span className="text-xs block">{m.label}</span>
                 </button>
               ))}
             </div>

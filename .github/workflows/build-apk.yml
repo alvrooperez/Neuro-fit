@@ -35,6 +35,8 @@ jobs:
       run: |
         npx cap add android
         npx cap sync android
+        python3 -m pip install pillow
+        python3 scripts/setup_icons.py
 
     - name: Build Debug APK
       run: |

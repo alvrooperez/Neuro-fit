@@ -33,28 +33,28 @@ export const Mascot = ({ mood = 'happy', size = 110, speech = null, className = 
         <div className="absolute bottom-2 -left-1 w-1.5 h-1.5 rounded-full bg-cyan-300 shadow-[0_0_6px_#67e8f9] animate-pulse pointer-events-none" />
         <div className="absolute top-1/2 -right-2 w-1.5 h-1.5 rounded-full bg-amber-200 shadow-[0_0_6px_#fef08a] animate-pulse pointer-events-none" />
 
-        {/* Chispa Visual: Unboxed with Soft Radial Mask Blend */}
+        {/* Chispa Visual: Unboxed with Soft Radial Mask Blend & Pure Cutout */}
         <div 
           className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-110"
           style={{
-            maskImage: 'radial-gradient(circle at 50% 50%, black 58%, rgba(0,0,0,0.85) 72%, transparent 92%)',
-            WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 58%, rgba(0,0,0,0.85) 72%, transparent 92%)',
+            maskImage: 'radial-gradient(circle at 50% 50%, black 60%, rgba(0,0,0,0.8) 75%, transparent 95%)',
+            WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 60%, rgba(0,0,0,0.8) 75%, transparent 95%)',
           }}
         >
           <img
             src={imageSrc}
             alt="Chispa Mnemónica"
-            className="w-full h-full object-contain filter drop-shadow-[0_4px_16px_rgba(56,189,248,0.25)] pointer-events-none"
+            className="w-full h-full object-contain filter drop-shadow-[0_4px_16px_rgba(56,189,248,0.2)] pointer-events-none mix-blend-multiply"
           />
         </div>
       </div>
 
-      {/* Luminous Celestial Speech Bubble */}
+      {/* Duolingo Style Tactile Speech Bubble */}
       {speech && (
-        <div className="relative bg-white/90 backdrop-blur-md border border-cyan-200/70 px-4 py-2.5 rounded-2xl shadow-md shadow-cyan-500/10 max-w-xs animate-pop">
+        <div className="relative bg-white border-2 border-slate-100 px-4 py-2.5 rounded-2xl shadow-sm max-w-xs animate-pop">
           {/* Bubble Pointer */}
-          <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-3 bg-white/90 border-l border-b border-cyan-200/70 rotate-45" />
-          <p className="text-xs font-bold text-slate-800 leading-snug relative z-10">
+          <div className="absolute top-1/2 -left-2 -translate-y-1/2 w-3.5 h-3.5 bg-white border-l-2 border-b-2 border-slate-100 rotate-45" />
+          <p className="text-xs font-bold text-slate-700 leading-snug relative z-10">
             {speech}
           </p>
         </div>
