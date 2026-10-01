@@ -26,11 +26,21 @@ export default {
         bounceShort: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-6px)' },
+        },
+        floatSpark: {
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg) scale(1)' },
+          '50%': { transform: 'translateY(-8px) rotate(1.5deg) scale(1.02)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { opacity: '0.4', transform: 'scale(0.95)' },
+          '50%': { opacity: '0.8', transform: 'scale(1.08)' },
         }
       },
       animation: {
         pop: 'pop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
         bounceShort: 'bounceShort 1s ease-in-out infinite',
+        floatSpark: 'floatSpark 3.5s ease-in-out infinite',
+        pulseGlow: 'pulseGlow 2.8s ease-in-out infinite',
       }
     },
   },

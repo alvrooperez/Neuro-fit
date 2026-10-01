@@ -353,7 +353,7 @@ export const UnifiedTrainer = ({ config, profile, onBack, onComplete, onStartSes
         <div className="my-auto space-y-4 text-center animate-in zoom-in-95 duration-200">
           <Mascot
             mood="focus"
-            size={75}
+            size={130}
             speech="¡Asocia cada elemento con una acción estrafalaria y viva!"
             className="justify-center mx-auto"
           />
@@ -638,7 +638,7 @@ export const UnifiedTrainer = ({ config, profile, onBack, onComplete, onStartSes
         <div className="my-auto space-y-4 text-center animate-in zoom-in-95 duration-200">
           <Mascot
             mood="celebrating"
-            size={80}
+            size={130}
             speech={score >= items.length * 0.9 ? "¡Excelente evocación! La cadena se mantiene firme." : "¡Buen entrenamiento! Cada sesión refuerza tus conexiones."}
             className="justify-center mx-auto"
           />

@@ -27,21 +27,23 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
   return (
     <div className="max-w-md mx-auto p-4 pb-28 select-none space-y-5 animate-in fade-in duration-200">
       
-      {/* 1. Athletic Training Status Header with 3D Coach */}
-      <div className="card-light p-4 flex items-center justify-between shadow-sm">
-        <Mascot
-          mood="happy"
-          size={58}
-          speech={
-            numbersConquered === 0
-              ? "¡Empezamos desde cero! Dominemos primero los dígitos base 0 al 9."
-              : `¡Racha de ${profile.streak || 1} días! Tu mente está lista para memorizar hoy.`
-          }
-        />
-        <div className="text-right shrink-0 ml-2">
-          <span className="text-xs font-black text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-xl">
-            {profile.xp || 0} XP
-          </span>
+      {/* 1. Athletic Training Status Header with Luminous Chispa */}
+      <div className="card-light p-4 shadow-sm relative overflow-hidden bg-gradient-to-r from-cyan-50/40 via-white to-amber-50/30 border-cyan-100">
+        <div className="flex items-center justify-between">
+          <Mascot
+            mood="happy"
+            size={92}
+            speech={
+              numbersConquered === 0
+                ? "¡Hola Álvaro! Empezamos desde cero: dominemos primero los dígitos 0 al 9."
+                : `¡Racha de ${profile.streak || 1} días! Tu chispa mental está encendida.`
+            }
+          />
+          <div className="text-right shrink-0 ml-2 self-start mt-1">
+            <span className="text-xs font-black text-indigo-600 bg-indigo-50 border border-indigo-200 px-2.5 py-1 rounded-xl">
+              {profile.xp || 0} XP
+            </span>
+          </div>
         </div>
       </div>
 

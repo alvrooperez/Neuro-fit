@@ -233,7 +233,7 @@ export const CustomTrainer = ({ onBack, onComplete, soundEnabled }) => {
             </p>
           </div>
 
-          <Mascot mood="focus" size={60} speech="Configura tu reto a voluntad. ¡Acepta el desafío!" className="mb-2" />
+          <Mascot mood="focus" size={88} speech="Configura tu reto a voluntad. ¡Acepta el desafío!" className="mb-2" />
 
           {/* 1. Tipo: Números, Palabras, Híbrido */}
           <div className="card-light p-4 space-y-2">
@@ -485,7 +485,7 @@ export const CustomTrainer = ({ onBack, onComplete, soundEnabled }) => {
           <div className="text-center mb-3">
             <Mascot
               mood="celebrating"
-              size={75}
+              size={130}
               speech={evalResults.accuracy >= 90 ? "¡Excelente! Has dominado la lista completa." : "¡Buen esfuerzo! Repasa los huecos marcados en rojo."}
               className="justify-center mx-auto mb-2"
             />
