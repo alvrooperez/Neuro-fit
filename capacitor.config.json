@@ -1,0 +1,6 @@
+{
+  "appId": "com.alvaro.neurofit",
+  "appName": "NeuroFit",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

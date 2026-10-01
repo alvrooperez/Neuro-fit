@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="zapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+  </defs>
+  <!-- Background squircle -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <!-- Brain glyph -->
+  <path d="M192 128C147.8 128 112 163.8 112 208C112 216.5 113.3 224.7 115.8 232.4C98.4 246.8 88 268.6 88 292C88 331.8 120.2 364 160 364C165.3 364 170.4 363.4 175.4 362.3C189.7 388.5 217.4 406 248.9 407.8V128.2C229.8 128.1 210.8 128 192 128ZM320 128C339.2 128 358.2 128.1 377.3 128.2V407.8C345.8 406 318.1 388.5 303.8 362.3C308.8 363.4 313.9 364 319.2 364C359 364 391.2 331.8 391.2 292C391.2 268.6 380.8 246.8 363.4 232.4C365.9 224.7 367.2 216.5 367.2 208C367.2 163.8 331.4 128 287.2 128H320Z" fill="white" opacity="0.95"/>
+  <!-- Central Lightning Bolt -->
+  <path d="M272 176L216 288H264L240 368L312 256H264L272 176Z" fill="url(#zapGrad)" stroke="#b45309" stroke-width="8" stroke-linejoin="round" />
+</svg>

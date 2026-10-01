@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenador de Casillero Mental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Ocultar flechas en inputs numéricos */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 text-slate-800">
+
+    <div class="max-w-xl w-full bg-white rounded-2xl shadow-xl overflow-hidden fade-in relative">
+        
+        <!-- PANTALLA DE CONFIGURACIÓN -->
+        <div id="setup-screen" class="p-8">
+            <div class="text-center mb-6">
+                <h1 class="text-3xl font-bold text-indigo-600 mb-2">Entrenador Mental</h1>
+                <p class="text-slate-500">Configura tu sesión de práctica</p>
+            </div>
+
+            <!-- Tabs de Modos -->
+            <div class="flex p-1 bg-slate-100 rounded-xl mb-6">
+                <button id="tab-train" onclick="setMode('train')" class="flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow text-indigo-600 transition-all">
+                    Entrenar Casillero
+                </button>
+                <button id="tab-memo" onclick="setMode('memo')" class="flex-1 py-2 text-sm font-semibold rounded-lg text-slate-500 hover:text-slate-700 transition-all">
+                    Memorizar Secuencia
+                </button>
+            </div>
+
+            <div class="space-y-5">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Desde el número</label>
+                        <input type="number" id="min-range" min="1" max="100" value="1" 
+                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Hasta el número</label>
+                        <input type="number" id="max-range" min="1" max="100" value="100" 
+                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label id="count-label" class="block text-sm font-medium text-slate-700 mb-1">Cantidad de preguntas</label>
+                    <input type="number" id="question-count" min="1" max="100" value="10" 
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+
+                <div id="cadence-container" class="hidden">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Cadencia (segundos por número)</label>
+                    <input type="number" id="cadence-input" min="0.5" max="10" step="0.5" value="1" 
+                        class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+
+                <button onclick="startGame()" 
+                    class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                    ¡Comenzar!
+                </button>
+            </div>
+            <div id="setup-error" class="text-red-500 text-sm text-center mt-3 hidden">
+                Rango inválido. Verifica los números.
+            </div>
+        </div>
+
+        <!-- PANTALLA DE JUEGO (ENTRENAR CASILLERO) -->
+        <div id="game-screen" class="p-8 hidden">
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Entrenando</span>
+                <span id="progress-text" class="text-sm font-bold bg-indigo-100 text-indigo-700 py-1 px-3 rounded-full">1 / 10</span>
+            </div>
+
+            <div class="text-center my-8">
+                <p id="question-instruction" class="text-sm text-slate-500 mb-2">¿Cuál es su pareja?</p>
+                <!-- Aquí se inyecta la palabra+emoji o el número -->
+                <h2 id="question-prompt" class="text-4xl md:text-5xl font-extrabold text-slate-800 tracking-tight flex items-center justify-center gap-3">--</h2>
+            </div>
+
+            <div class="space-y-4">
+                <input type="text" id="answer-input" autocomplete="off" placeholder="Tu respuesta..."
+                    class="w-full px-4 py-3 text-center text-2xl font-bold border-2 border-slate-200 rounded-xl focus:border-indigo-500 outline-none transition"
+                    onkeypress="handleKeyPress(event)">
+                
+                <button id="submit-btn" onclick="checkAnswer()" 
+                    class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 px-4 rounded-xl transition duration-200">
+                    Comprobar
+                </button>
+
+                <div id="feedback-area" class="hidden text-center p-4 rounded-xl mt-4 border-2">
+                    <p id="feedback-message" class="text-2xl font-bold mb-2"></p>
+                    <div id="feedback-correct-answer" class="text-lg flex items-center justify-center gap-2"></div>
+                    <button id="next-btn" onclick="nextQuestion()" 
+                        class="w-full mt-4 bg-slate-800 text-white font-semibold py-3 px-4 rounded-xl transition duration-200 shadow-sm">
+                        Siguiente (Enter)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE MEMORIZACIÓN (MOSTRAR SECUENCIA FLASH) -->
+        <div id="memo-show-screen" class="p-8 hidden text-center">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Memoriza la Secuencia</h2>
+            <p id="memo-instruction" class="text-sm text-slate-500 mb-8">Prepárate. Los números aparecerán uno a uno.</p>
+            
+            <div id="sequence-container" class="flex justify-center items-center h-48 mb-8">
+                <div id="current-memo-number" class="text-8xl font-extrabold text-indigo-600 transition-opacity duration-150 hidden">--</div>
+            </div>
+
+            <button id="start-sequence-btn" onclick="playSequence()" 
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                Iniciar Secuencia
+            </button>
+        </div>
+
+        <!-- PANTALLA DE MEMORIZACIÓN (ESCRIBIR SECUENCIA) -->
+        <div id="memo-input-screen" class="p-8 hidden text-center">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Escribe la Secuencia</h2>
+            <p class="text-sm text-slate-500 mb-6">Introduce los números en el orden exacto en el que aparecieron</p>
+            
+            <div id="memo-inputs-container" class="flex flex-wrap justify-center gap-2 mb-8 max-h-64 overflow-y-auto p-2">
+                <!-- Se inyectan los inputs numéricos -->
+            </div>
+
+            <button onclick="checkSequence()" 
+                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                Comprobar Resultado
+            </button>
+        </div>
+
+        <!-- PANTALLA DE RESULTADOS (COMPARTIDA) -->
+        <div id="result-screen" class="p-8 hidden text-center">
+            <div class="mb-6">
+                <div id="score-circle" class="w-24 h-24 mx-auto rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-inner text-white">
+                    <!-- Score -->
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">¡Sesión Terminada!</h2>
+            </div>
+
+            <div id="mistakes-container" class="text-left mb-6 hidden">
+                <h3 id="mistakes-title" class="font-semibold text-slate-700 mb-3 border-b pb-2">Debes repasar:</h3>
+                <ul id="mistakes-list" class="space-y-2 text-sm text-slate-600 max-h-56 overflow-y-auto pr-2">
+                    <!-- Errores inyectados por JS -->
+                </ul>
+            </div>
+
+            <button onclick="resetGame()" 
+                class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                Volver al menú principal
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Casillero definitivo con Tiza (16) y Nuez (26)
+        const casillero = {
+            1: "Té", 2: "Ñu", 3: "Humo", 4: "Oca", 5: "Ola", 6: "Oso", 7: "Ufo", 8: "Hacha", 9: "Boa", 10: "Toro",
+            11: "Dado", 12: "Atún", 13: "Tomo", 14: "Taco", 15: "Tela", 16: "Tiza", 17: "Tofu", 18: "Ducha", 19: "Topo", 20: "Noria",
+            21: "Nido", 22: "Enano", 23: "Nemo", 24: "Yunque", 25: "Anillo", 26: "Nuez", 27: "Anafe", 28: "Nicho", 29: "Nube", 30: "Muro",
+            31: "Moto", 32: "Mano", 33: "Momia", 34: "Hamaca", 35: "Muelle", 36: "Mesa", 37: "Mafia", 38: "Mago", 39: "Mapa", 40: "Carro",
+            41: "Cohete", 42: "Cuna", 43: "Cama", 44: "Coco", 45: "Cola", 46: "Casa", 47: "Café", 48: "Caja", 49: "Copa", 50: "Loro",
+            51: "Lata", 52: "Luna", 53: "Llama", 54: "Laca", 55: "Lila", 56: "Losa", 57: "Elfo", 58: "Leche", 59: "Lupa", 60: "Suero",
+            61: "Seta", 62: "Sauna", 63: "Sumo", 64: "Saco", 65: "Sol", 66: "Seso", 67: "Sofá", 68: "Soga", 69: "Sapo", 70: "Faro",
+            71: "Foto", 72: "Fino", 73: "Fama", 74: "Foca", 75: "Fila", 76: "Foso", 77: "FIFA", 78: "Ficha", 79: "FBI", 80: "Churro",
+            81: "Gato", 82: "Genio", 83: "Goma", 84: "Cheque", 85: "Jaula", 86: "Gasa", 87: "Jefe", 88: "Gajo", 89: "Chapa", 90: "Puro",
+            91: "Bota", 92: "Piano", 93: "Puma", 94: "Vaca", 95: "Pala", 96: "Pesa", 97: "Puf", 98: "Viga", 99: "Pipa", 100: "Torero"
+        };
+
+        const emojis = {
+            1: "☕", 2: "🐃", 3: "💨", 4: "🦢", 5: "🌊", 6: "🐻", 7: "🛸", 8: "🪓", 9: "🐍", 10: "🐂",
+            11: "🎲", 12: "🐟", 13: "📚", 14: "🌮", 15: "🧣", 16: "🖍️", 17: "🧊", 18: "🚿", 19: "🦡", 20: "🎡",
+            21: "🪹", 22: "🧔", 23: "🐠", 24: "🔨", 25: "💍", 26: "🥜", 27: "♨️", 28: "🪦", 29: "☁️", 30: "🧱",
+            31: "🏍️", 32: "✋", 33: "🧟", 34: "🏖️", 35: "〰️", 36: "🪑", 37: "🕴️", 38: "🧙‍♂️", 39: "🗺️", 40: "🛒",
+            41: "🚀", 42: "🛏️", 43: "🛌", 44: "🥥", 45: "🧴", 46: "🏠", 47: "☕", 48: "📦", 49: "🍷", 50: "🦜",
+            51: "🥫", 52: "🌕", 53: "🦙", 54: "💇", 55: "🪻", 56: "🪨", 57: "🧝", 58: "🥛", 59: "🔍", 60: "💧",
+            61: "🍄", 62: "🧖", 63: "🤼", 64: "🥔", 65: "☀️", 66: "🧠", 67: "🛋️", 68: "🪢", 69: "🐸", 70: "🗼",
+            71: "📸", 72: "🍷", 73: "🌟", 74: "🦭", 75: "🪑", 76: "🏰", 77: "⚽", 78: "🪙", 79: "🕵️", 80: "🥖",
+            81: "🐈", 82: "🧞", 83: "✏️", 84: "🧾", 85: "⛓️", 86: "🩹", 87: "👔", 88: "🍊", 89: "🏅", 90: "🚬",
+            91: "🥾", 92: "🎹", 93: "🐆", 94: "🐄", 95: "⛏️", 96: "🏋️", 97: "🛋️", 98: "🏗️", 99: "💨", 100: "🤺"
+        };
+
+        let state = {
+            mode: 'train', // 'train' o 'memo'
+            questions: [],
+            sequence: [],
+            currentIndex: 0,
+            score: 0,
+            mistakes: []
+        };
+
+        function normalizeText(text) {
+            return text.toString()
+                .trim()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, ""); 
+        }
+
+        function setMode(mode) {
+            state.mode = mode;
+            const tabTrain = document.getElementById('tab-train');
+            const tabMemo = document.getElementById('tab-memo');
+            const countLabel = document.getElementById('count-label');
+            const cadenceContainer = document.getElementById('cadence-container');
+
+            if (mode === 'train') {
+                tabTrain.className = "flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow text-indigo-600 transition-all";
+                tabMemo.className = "flex-1 py-2 text-sm font-semibold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                countLabel.innerText = "Cantidad de preguntas";
+                cadenceContainer.classList.add('hidden');
+            } else {
+                tabMemo.className = "flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow text-indigo-600 transition-all";
+                tabTrain.className = "flex-1 py-2 text-sm font-semibold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                countLabel.innerText = "Longitud de la secuencia";
+                cadenceContainer.classList.remove('hidden');
+            }
+        }
+
+        function startGame() {
+            const minInput = parseInt(document.getElementById('min-range').value);
+            const maxInput = parseInt(document.getElementById('max-range').value);
+            const countInput = parseInt(document.getElementById('question-count').value);
+            const errorDiv = document.getElementById('setup-error');
+
+            if (isNaN(minInput) || isNaN(maxInput) || isNaN(countInput) || 
+                minInput < 1 || maxInput > 100 || minInput > maxInput || countInput < 1) {
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            errorDiv.classList.add('hidden');
+
+            state.score = 0;
+            state.mistakes = [];
+
+            if (state.mode === 'train') {
+                startTrainMode(minInput, maxInput, countInput);
+            } else {
+                startMemoMode(minInput, maxInput, countInput);
+            }
+        }
+
+        function startTrainMode(min, max, count) {
+            state.questions = [];
+            state.currentIndex = 0;
+            
+            let pool = [];
+            
+            for (let i = 0; i < count; i++) {
+                if (pool.length === 0) {
+                    for (let j = min; j <= max; j++) pool.push(j);
+                    // Barajar Fisher-Yates para distribución perfecta
+                    for (let k = pool.length - 1; k > 0; k--) {
+                        const r = Math.floor(Math.random() * (k + 1));
+                        [pool[k], pool[r]] = [pool[r], pool[k]];
+                    }
+                    if (state.questions.length > 0 && pool[0] === state.questions[state.questions.length - 1].number && pool.length > 1) {
+                        let temp = pool[0]; pool[0] = pool[1]; pool[1] = temp;
+                    }
+                }
+
+                const randomNum = pool.pop();
+                const word = casillero[randomNum];
+                const emoji = emojis[randomNum];
+                const askForNumber = Math.random() > 0.5; 
+                
+                state.questions.push({
+                    number: randomNum,
+                    word: word,
+                    emoji: emoji,
+                    type: askForNumber ? 'number' : 'word',
+                    prompt: askForNumber ? `${word} <span class="text-4xl">${emoji}</span>` : randomNum.toString(),
+                    correctAnswer: askForNumber ? randomNum.toString() : word
+                });
+            }
+
+            switchScreen('setup-screen', 'game-screen');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = state.questions[state.currentIndex];
+            document.getElementById('progress-text').innerText = `${state.currentIndex + 1} / ${state.questions.length}`;
+            document.getElementById('question-prompt').innerHTML = currentQ.prompt;
+            
+            const inputEl = document.getElementById('answer-input');
+            inputEl.value = '';
+            inputEl.type = currentQ.type === 'number' ? 'number' : 'text';
+            inputEl.disabled = false;
+            
+            document.getElementById('submit-btn').classList.remove('hidden');
+            document.getElementById('feedback-area').classList.add('hidden');
+            
+            setTimeout(() => inputEl.focus(), 50);
+        }
+
+        function checkAnswer() {
+            const currentQ = state.questions[state.currentIndex];
+            const inputEl = document.getElementById('answer-input');
+            const userAnswerRaw = inputEl.value;
+            
+            if (userAnswerRaw.trim() === '') return; 
+
+            const isCorrect = normalizeText(userAnswerRaw) === normalizeText(currentQ.correctAnswer);
+
+            if (isCorrect) state.score++;
+            else {
+                state.mistakes.push(`<strong>${currentQ.number}</strong> era <strong>${currentQ.word} ${currentQ.emoji}</strong> (Respondiste: <em>${userAnswerRaw}</em>)`);
+            }
+
+            showFeedback(isCorrect, currentQ);
+        }
+
+        function showFeedback(isCorrect, currentQ) {
+            document.getElementById('submit-btn').classList.add('hidden');
+            document.getElementById('answer-input').disabled = true;
+            
+            const feedbackArea = document.getElementById('feedback-area');
+            const msgEl = document.getElementById('feedback-message');
+            const correctAnsEl = document.getElementById('feedback-correct-answer');
+            
+            feedbackArea.className = "text-center p-4 rounded-xl mt-4 border-2";
+            
+            if (isCorrect) {
+                feedbackArea.classList.add('bg-green-50', 'border-green-200', 'text-green-700');
+                msgEl.innerText = "¡Correcto!";
+                correctAnsEl.innerHTML = `${currentQ.word} <span class="text-2xl">${currentQ.emoji}</span>`;
+            } else {
+                feedbackArea.classList.add('bg-red-50', 'border-red-200', 'text-red-700');
+                msgEl.innerText = "Incorrecto";
+                correctAnsEl.innerHTML = `Era: <span class="font-bold text-xl">${currentQ.number} = ${currentQ.word} ${currentQ.emoji}</span>`;
+            }
+            
+            document.getElementById('next-btn').focus();
+        }
+
+        function nextQuestion() {
+            state.currentIndex++;
+            if (state.currentIndex >= state.questions.length) showResults();
+            else {
+                const gameScreen = document.getElementById('game-screen');
+                gameScreen.classList.remove('fade-in');
+                void gameScreen.offsetWidth; 
+                gameScreen.classList.add('fade-in');
+                loadQuestion();
+            }
+        }
+
+        function startMemoMode(min, max, count) {
+            state.sequence = [];
+            for(let i=0; i<count; i++) {
+                state.sequence.push(Math.floor(Math.random() * (max - min + 1)) + min);
+            }
+            
+            document.getElementById('current-memo-number').innerText = '--';
+            document.getElementById('current-memo-number').classList.add('hidden');
+            document.getElementById('start-sequence-btn').classList.remove('hidden');
+            document.getElementById('memo-instruction').innerText = "Prepárate. Los números aparecerán uno a uno.";
+
+            switchScreen('setup-screen', 'memo-show-screen');
+        }
+
+        function playSequence() {
+            const btn = document.getElementById('start-sequence-btn');
+            const display = document.getElementById('current-memo-number');
+            const instruction = document.getElementById('memo-instruction');
+            const cadenceSeconds = parseFloat(document.getElementById('cadence-input').value) || 1;
+            const cadenceMs = cadenceSeconds * 1000;
+            
+            btn.classList.add('hidden');
+            display.classList.remove('hidden');
+            display.style.opacity = '1';
+            
+            let i = 0;
+            instruction.innerText = "Crea tu historia en cadena...";
+            display.innerText = state.sequence[i];
+            
+            const interval = setInterval(() => {
+                display.style.opacity = '0'; // Parpadeo para separar elementos idénticos
+                setTimeout(() => {
+                    i++;
+                    if (i < state.sequence.length) {
+                        display.innerText = state.sequence[i];
+                        display.style.opacity = '1';
+                    } else {
+                        clearInterval(interval);
+                        hideSequence();
+                    }
+                }, 150); 
+            }, cadenceMs);
+        }
+
+        function hideSequence() {
+            const container = document.getElementById('memo-inputs-container');
+            container.innerHTML = '';
+            
+            state.sequence.forEach((num, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = "flex flex-col items-center gap-1 m-1";
+                
+                const label = document.createElement('span');
+                label.className = "text-xs font-bold text-slate-400";
+                label.innerText = `Nº ${index + 1}`;
+                
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'w-16 h-16 text-center text-2xl font-bold border-2 border-slate-300 rounded-xl focus:border-indigo-500 bg-white outline-none transition';
+                input.id = `memo-input-${index}`;
+                
+                input.onkeypress = (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const next = document.getElementById(`memo-input-${index + 1}`);
+                        if (next) next.focus();
+                        else checkSequence();
+                    }
+                };
+
+                wrapper.appendChild(label);
+                wrapper.appendChild(input);
+                container.appendChild(wrapper);
+            });
+
+            switchScreen('memo-show-screen', 'memo-input-screen');
+            setTimeout(() => document.getElementById('memo-input-0').focus(), 100);
+        }
+
+        function checkSequence() {
+            state.score = 0;
+            state.mistakes = [];
+            
+            state.sequence.forEach((correctNum, index) => {
+                const userVal = document.getElementById(`memo-input-${index}`).value;
+                const userNum = parseInt(userVal);
+                
+                if (userNum === correctNum) {
+                    state.score++;
+                } else {
+                    const word = casillero[correctNum];
+                    const emoji = emojis[correctNum];
+                    const userStr = isNaN(userNum) ? "Nada" : userNum;
+                    state.mistakes.push(`Posición ${index + 1}: Era <strong>${correctNum} (${word} ${emoji})</strong> - Escribiste <em>${userStr}</em>`);
+                }
+            });
+            
+            showResults();
+        }
+
+        function showResults() {
+            const total = state.mode === 'train' ? state.questions.length : state.sequence.length;
+            
+            if (state.mode === 'train') document.getElementById('game-screen').classList.add('hidden');
+            else document.getElementById('memo-input-screen').classList.add('hidden');
+            
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('result-screen').classList.add('fade-in');
+            
+            const percentage = (state.score / total) * 100;
+            const scoreCircle = document.getElementById('score-circle');
+            scoreCircle.innerText = `${state.score}/${total}`;
+            
+            scoreCircle.className = "w-24 h-24 mx-auto rounded-full flex items-center justify-center text-3xl font-bold mb-4 shadow-md text-white";
+            if (percentage >= 80) scoreCircle.classList.add('bg-green-500');
+            else if (percentage >= 50) scoreCircle.classList.add('bg-yellow-500');
+            else scoreCircle.classList.add('bg-red-500');
+
+            const mistakesContainer = document.getElementById('mistakes-container');
+            const mistakesList = document.getElementById('mistakes-list');
+            mistakesList.innerHTML = '';
+            
+            if (state.mistakes.length > 0) {
+                state.mistakes.forEach(mistake => {
+                    const li = document.createElement('li');
+                    li.innerHTML = mistake;
+                    li.className = "bg-red-50 p-3 rounded-lg border border-red-100 text-red-800";
+                    mistakesList.appendChild(li);
+                });
+                mistakesContainer.classList.remove('hidden');
+            } else {
+                mistakesContainer.classList.add('hidden');
+            }
+        }
+
+        function handleKeyPress(e) {
+            if (state.mode === 'train' && e.key === 'Enter') {
+                if (!document.getElementById('submit-btn').classList.contains('hidden')) {
+                    checkAnswer();
+                } else if (!document.getElementById('feedback-area').classList.contains('hidden')) {
+                    nextQuestion();
+                }
+            }
+        }
+
+        function resetGame() {
+            switchScreen('result-screen', 'setup-screen');
+        }
+
+        function switchScreen(hideId, showId) {
+            document.getElementById(hideId).classList.add('hidden');
+            const showEl = document.getElementById(showId);
+            showEl.classList.remove('hidden');
+            showEl.classList.remove('fade-in');
+            void showEl.offsetWidth; 
+            showEl.classList.add('fade-in');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+[
+  {
+    "num": 0,
+    "word": "Aro",
+    "emoji": "⭕"
+  },
+  {
+    "num": 1,
+    "word": "Té",
+    "emoji": "☕"
+  },
+  {
+    "num": 2,
+    "word": "Ñu",
+    "emoji": "🐃"
+  },
+  {
+    "num": 3,
+    "word": "Humo",
+    "emoji": "💨"
+  },
+  {
+    "num": 4,
+    "word": "Oca",
+    "emoji": "🦢"
+  },
+  {
+    "num": 5,
+    "word": "Ola",
+    "emoji": "🌊"
+  },
+  {
+    "num": 6,
+    "word": "Oso",
+    "emoji": "🐻"
+  },
+  {
+    "num": 7,
+    "word": "Ufo",
+    "emoji": "🛸"
+  },
+  {
+    "num": 8,
+    "word": "Hacha",
+    "emoji": "🪓"
+  },
+  {
+    "num": 9,
+    "word": "Boa",
+    "emoji": "🐍"
+  },
+  {
+    "num": 10,
+    "word": "Toro",
+    "emoji": "🐂"
+  },
+  {
+    "num": 11,
+    "word": "Dado",
+    "emoji": "🎲"
+  },
+  {
+    "num": 12,
+    "word": "Atún",
+    "emoji": "🐟"
+  },
+  {
+    "num": 13,
+    "word": "Tomo",
+    "emoji": "📚"
+  },
+  {
+    "num": 14,
+    "word": "Taco",
+    "emoji": "🌮"
+  },
+  {
+    "num": 15,
+    "word": "Tela",
+    "emoji": "🧣"
+  },
+  {
+    "num": 16,
+    "word": "Tiza",
+    "emoji": "🖍️"
+  },
+  {
+    "num": 17,
+    "word": "Tofu",
+    "emoji": "🧊"
+  },
+  {
+    "num": 18,
+    "word": "Ducha",
+    "emoji": "🚿"
+  },
+  {
+    "num": 19,
+    "word": "Topo",
+    "emoji": "🦡"
+  },
+  {
+    "num": 20,
+    "word": "Noria",
+    "emoji": "🎡"
+  },
+  {
+    "num": 21,
+    "word": "Nido",
+    "emoji": "🪹"
+  },
+  {
+    "num": 22,
+    "word": "Enano",
+    "emoji": "🧔"
+  },
+  {
+    "num": 23,
+    "word": "Nemo",
+    "emoji": "🐠"
+  },
+  {
+    "num": 24,
+    "word": "Yunque",
+    "emoji": "🔨"
+  },
+  {
+    "num": 25,
+    "word": "Anillo",
+    "emoji": "💍"
+  },
+  {
+    "num": 26,
+    "word": "Nuez",
+    "emoji": "🥜"
+  },
+  {
+    "num": 27,
+    "word": "Anafe",
+    "emoji": "♨️"
+  },
+  {
+    "num": 28,
+    "word": "Nicho",
+    "emoji": "🪦"
+  },
+  {
+    "num": 29,
+    "word": "Nube",
+    "emoji": "☁️"
+  },
+  {
+    "num": 30,
+    "word": "Muro",
+    "emoji": "🧱"
+  },
+  {
+    "num": 31,
+    "word": "Moto",
+    "emoji": "🏍️"
+  },
+  {
+    "num": 32,
+    "word": "Mano",
+    "emoji": "✋"
+  },
+  {
+    "num": 33,
+    "word": "Momia",
+    "emoji": "🧟"
+  },
+  {
+    "num": 34,
+    "word": "Hamaca",
+    "emoji": "🏖️"
+  },
+  {
+    "num": 35,
+    "word": "Muelle",
+    "emoji": "〰️"
+  },
+  {
+    "num": 36,
+    "word": "Mesa",
+    "emoji": "🪑"
+  },
+  {
+    "num": 37,
+    "word": "Mafia",
+    "emoji": "🕴️"
+  },
+  {
+    "num": 38,
+    "word": "Mago",
+    "emoji": "🧙‍♂️"
+  },
+  {
+    "num": 39,
+    "word": "Mapa",
+    "emoji": "🗺️"
+  },
+  {
+    "num": 40,
+    "word": "Carro",
+    "emoji": "🛒"
+  },
+  {
+    "num": 41,
+    "word": "Cohete",
+    "emoji": "🚀"
+  },
+  {
+    "num": 42,
+    "word": "Cuna",
+    "emoji": "🛏️"
+  },
+  {
+    "num": 43,
+    "word": "Cama",
+    "emoji": "🛌"
+  },
+  {
+    "num": 44,
+    "word": "Coco",
+    "emoji": "🥥"
+  },
+  {
+    "num": 45,
+    "word": "Cola",
+    "emoji": "🧴"
+  },
+  {
+    "num": 46,
+    "word": "Casa",
+    "emoji": "🏠"
+  },
+  {
+    "num": 47,
+    "word": "Café",
+    "emoji": "☕"
+  },
+  {
+    "num": 48,
+    "word": "Caja",
+    "emoji": "📦"
+  },
+  {
+    "num": 49,
+    "word": "Copa",
+    "emoji": "🍷"
+  },
+  {
+    "num": 50,
+    "word": "Loro",
+    "emoji": "🦜"
+  },
+  {
+    "num": 51,
+    "word": "Lata",
+    "emoji": "🥫"
+  },
+  {
+    "num": 52,
+    "word": "Luna",
+    "emoji": "🌕"
+  },
+  {
+    "num": 53,
+    "word": "Llama",
+    "emoji": "🦙"
+  },
+  {
+    "num": 54,
+    "word": "Laca",
+    "emoji": "💇"
+  },
+  {
+    "num": 55,
+    "word": "Lila",
+    "emoji": "🪻"
+  },
+  {
+    "num": 56,
+    "word": "Losa",
+    "emoji": "🪨"
+  },
+  {
+    "num": 57,
+    "word": "Elfo",
+    "emoji": "🧝"
+  },
+  {
+    "num": 58,
+    "word": "Leche",
+    "emoji": "🥛"
+  },
+  {
+    "num": 59,
+    "word": "Lupa",
+    "emoji": "🔍"
+  },
+  {
+    "num": 60,
+    "word": "Suero",
+    "emoji": "💧"
+  },
+  {
+    "num": 61,
+    "word": "Seta",
+    "emoji": "🍄"
+  },
+  {
+    "num": 62,
+    "word": "Sauna",
+    "emoji": "🧖"
+  },
+  {
+    "num": 63,
+    "word": "Sumo",
+    "emoji": "🤼"
+  },
+  {
+    "num": 64,
+    "word": "Saco",
+    "emoji": "🥔"
+  },
+  {
+    "num": 65,
+    "word": "Sol",
+    "emoji": "☀️"
+  },
+  {
+    "num": 66,
+    "word": "Seso",
+    "emoji": "🧠"
+  },
+  {
+    "num": 67,
+    "word": "Sofá",
+    "emoji": "🛋️"
+  },
+  {
+    "num": 68,
+    "word": "Soga",
+    "emoji": "🪢"
+  },
+  {
+    "num": 69,
+    "word": "Sapo",
+    "emoji": "🐸"
+  },
+  {
+    "num": 70,
+    "word": "Faro",
+    "emoji": "🗼"
+  },
+  {
+    "num": 71,
+    "word": "Foto",
+    "emoji": "📸"
+  },
+  {
+    "num": 72,
+    "word": "Fino",
+    "emoji": "🍷"
+  },
+  {
+    "num": 73,
+    "word": "Fama",
+    "emoji": "🌟"
+  },
+  {
+    "num": 74,
+    "word": "Foca",
+    "emoji": "🦭"
+  },
+  {
+    "num": 75,
+    "word": "Fila",
+    "emoji": "🪑"
+  },
+  {
+    "num": 76,
+    "word": "Foso",
+    "emoji": "🏰"
+  },
+  {
+    "num": 77,
+    "word": "FIFA",
+    "emoji": "⚽"
+  },
+  {
+    "num": 78,
+    "word": "Ficha",
+    "emoji": "🪙"
+  },
+  {
+    "num": 79,
+    "word": "FBI",
+    "emoji": "🕵️"
+  },
+  {
+    "num": 80,
+    "word": "Churro",
+    "emoji": "🥖"
+  },
+  {
+    "num": 81,
+    "word": "Gato",
+    "emoji": "🐈"
+  },
+  {
+    "num": 82,
+    "word": "Genio",
+    "emoji": "🧞"
+  },
+  {
+    "num": 83,
+    "word": "Goma",
+    "emoji": "✏️"
+  },
+  {
+    "num": 84,
+    "word": "Cheque",
+    "emoji": "🧾"
+  },
+  {
+    "num": 85,
+    "word": "Jaula",
+    "emoji": "⛓️"
+  },
+  {
+    "num": 86,
+    "word": "Gasa",
+    "emoji": "🩹"
+  },
+  {
+    "num": 87,
+    "word": "Jefe",
+    "emoji": "👔"
+  },
+  {
+    "num": 88,
+    "word": "Gajo",
+    "emoji": "🍊"
+  },
+  {
+    "num": 89,
+    "word": "Chapa",
+    "emoji": "🏅"
+  },
+  {
+    "num": 90,
+    "word": "Puro",
+    "emoji": "🚬"
+  },
+  {
+    "num": 91,
+    "word": "Bota",
+    "emoji": "🥾"
+  },
+  {
+    "num": 92,
+    "word": "Piano",
+    "emoji": "🎹"
+  },
+  {
+    "num": 93,
+    "word": "Puma",
+    "emoji": "🐆"
+  },
+  {
+    "num": 94,
+    "word": "Vaca",
+    "emoji": "🐄"
+  },
+  {
+    "num": 95,
+    "word": "Pala",
+    "emoji": "⛏️"
+  },
+  {
+    "num": 96,
+    "word": "Pesa",
+    "emoji": "🏋️"
+  },
+  {
+    "num": 97,
+    "word": "Puf",
+    "emoji": "🛋️"
+  },
+  {
+    "num": 98,
+    "word": "Viga",
+    "emoji": "🏗️"
+  },
+  {
+    "num": 99,
+    "word": "Pipa",
+    "emoji": "💨"
+  },
+  {
+    "num": 100,
+    "word": "Torero",
+    "emoji": "🤺"
+  }
+]
