@@ -58,9 +58,19 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         </div>
 
         <div className="flex items-center space-x-3 my-3">
-          <span className="text-4xl p-2.5 bg-white/15 rounded-2xl border border-white/20 shadow-inner">
-            {recommended.icon || '🧠'}
-          </span>
+          <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-white/40 shadow-md shrink-0 bg-white/10 backdrop-blur-xs">
+            <img
+              src={
+                recommended.model === 'numbers'
+                  ? '/badges/badge_numbers.jpg'
+                  : recommended.model === 'hybrid'
+                  ? '/badges/badge_hybrid.jpg'
+                  : '/badges/badge_words.jpg'
+              }
+              alt="Insignia Sesión"
+              className="w-full h-full object-cover"
+            />
+          </div>
           <div>
             <h2 className="text-xl font-black tracking-tight">{recommended.title}</h2>
             <p className="text-xs text-emerald-50 mt-0.5">{recommended.subtitle}</p>
@@ -117,8 +127,8 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         {/* PILAR 1: PALABRAS */}
         <div className="card-light p-4 flex items-center justify-between hover:border-slate-300 transition-colors">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-600">
-              <BookOpen className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-amber-300 shadow-sm shrink-0">
+              <img src="/badges/badge_words.jpg" alt="Pilar Palabras" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
@@ -153,8 +163,8 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         <div className="card-light p-4 space-y-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600">
-                <Hash className="w-5 h-5" />
+              <div className="w-12 h-12 rounded-2xl overflow-hidden border border-amber-300 shadow-sm shrink-0">
+                <img src="/badges/badge_numbers.jpg" alt="Pilar Números" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h4 className="font-black text-sm text-slate-800">Pilar Números & Casillero</h4>
@@ -192,8 +202,8 @@ export const Dashboard = ({ profile, onStartSession, onOpenCustomGym, onOpenModa
         {/* PILAR 3: EL RETO HÍBRIDO */}
         <div className="card-light p-4 flex items-center justify-between hover:border-slate-300 transition-colors">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-2xl bg-purple-50 border border-purple-200 text-purple-600">
-              <Zap className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-cyan-300 shadow-sm shrink-0">
+              <img src="/badges/badge_hybrid.jpg" alt="El Duelo Híbrido" className="w-full h-full object-cover" />
             </div>
             <div>
               <div className="flex items-center space-x-2">

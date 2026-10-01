@@ -1,30 +1,30 @@
 import React from 'react';
 
 export const Mascot = ({ mood = 'happy', size = 80, speech = null, className = '' }) => {
-  let imageSrc = '/characters/coach_idle.jpg';
-  let badgeText = 'Entrenador';
+  let imageSrc = '/characters/spark_idle.jpg';
+  let badgeText = 'Chispa';
 
   if (mood === 'celebrating' || mood === 'victory') {
-    imageSrc = '/characters/coach_victory.jpg';
+    imageSrc = '/characters/spark_celebrate.jpg';
     badgeText = '¡Victoria!';
   } else if (mood === 'thinking' || mood === 'focus') {
-    imageSrc = '/characters/coach_focus.jpg';
+    imageSrc = '/characters/spark_focus.jpg';
     badgeText = 'Enfoque';
   }
 
   return (
     <div className={`flex items-center space-x-3 select-none ${className}`}>
-      {/* 3D Mental Athlete Coach */}
+      {/* Bioluminescent Neural Spark Companion */}
       <div 
         style={{ width: size, height: size }}
-        className="relative shrink-0 rounded-2xl overflow-hidden shadow-md border-2 border-emerald-500/40 ring-2 ring-emerald-200 bg-white"
+        className="relative shrink-0 rounded-2xl overflow-hidden shadow-lg shadow-cyan-500/15 border-2 border-cyan-400/50 ring-2 ring-amber-300/40 bg-slate-900 group"
       >
         <img
           src={imageSrc}
-          alt="Coach Mnemónico"
-          className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+          alt="Chispa Mnemónica"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <span className="absolute bottom-0 inset-x-0 bg-slate-900/80 text-[8px] font-black text-emerald-300 text-center uppercase tracking-wider py-0.5 backdrop-blur-xs">
+        <span className="absolute bottom-0 inset-x-0 bg-slate-950/75 text-[8px] font-black text-amber-300 text-center uppercase tracking-wider py-0.5 backdrop-blur-xs border-t border-cyan-500/20">
           {badgeText}
         </span>
       </div>
